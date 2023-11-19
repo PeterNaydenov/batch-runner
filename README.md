@@ -5,6 +5,8 @@
 ![GitHub issues](https://img.shields.io/github/issues-raw/peterNaydenov/batch-runner)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/%40peter.naydenov%2Fbatch-runner)
 
+
+
 ## Description
 
 Execute a batch job with a simple call. Batch itself contains a name, source of data and a job to be executed. Batch runner will execute the job for each item in the source.

@@ -20,6 +20,12 @@
     "cypress": "cypress open --component --browser chrome",
     "cover": "c8 mocha test"
   },
+  
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeterNaydenov/batch-runner.git"
+  },
+
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
     "c8": "^8.0.1",
