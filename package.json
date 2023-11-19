@@ -1,7 +1,7 @@
 {
   "name": "@peter.naydenov/batch-runner",
   "description": "Execute a batch job with a simple call",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "author": "Peter Naydenov",
   "keywords": [
@@ -20,12 +20,10 @@
     "cypress": "cypress open --component --browser chrome",
     "cover": "c8 mocha test"
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PeterNaydenov/batch-runner.git"
   },
-
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
     "c8": "^8.0.1",
