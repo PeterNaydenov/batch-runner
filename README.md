@@ -15,6 +15,10 @@ Source is a function that returns an array of items. Source function will be exe
 
 In job run request you can provide extra data parameters that will be passed to the job function as well after the item from the source.
 
+Library `batch-runner` is a framework agnostic. No dependencies.
+
+
+
 ## Installation
 Here is how to install the library:
 ```
