@@ -1,0 +1,47 @@
+{
+  "name": "@peter.naydenov/batch-runner",
+  "description": "Execute a batch job with a simple call",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Peter Naydenov",
+  "keywords": [
+    "batch",
+    "job",
+    "runner",
+    "execute"
+  ],
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "mocha test",
+    "cypress": "cypress open --component --browser chrome",
+    "cover": "c8 mocha test"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "c8": "^8.0.1",
+    "chai": "^4.3.10",
+    "cypress": "^13.5.0",
+    "jsdom": "^22.1.0",
+    "mocha": "^10.2.0",
+    "vite": "^4.4.5",
+    "vue": "^3.3.4"
+  },
+  "c8": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "node_modules",
+      "test",
+      "test-data"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
+  }
+}
