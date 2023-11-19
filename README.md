@@ -73,9 +73,9 @@ batch.run ( 'myBatch', 'extra') // Extra parameter will be passed to the job fun
 - [History of changes](https://github.com/PeterNaydenov/batch-runner/blob/main/Changelog.md)
 
 ## Credits
-'@peter.naydenov/dom-selector' was created and supported by Peter Naydenov.
+'@peter.naydenov/batch-runner' was created and supported by Peter Naydenov.
 
 
 
 ## License
-'@peter.naydenov/dom-selector' is released under the [MIT License](http://opensource.org/licenses/MIT).
+'@peter.naydenov/batch-runner' is released under the [MIT License](http://opensource.org/licenses/MIT).
