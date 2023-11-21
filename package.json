@@ -25,6 +25,7 @@
     "url": "git+https://github.com/PeterNaydenov/batch-runner.git"
   },
   "devDependencies": {
+    "@peter.naydenov/dom-selector": "^1.0.1",
     "@vitejs/plugin-vue": "^4.2.3",
     "c8": "^8.0.1",
     "chai": "^4.3.10",

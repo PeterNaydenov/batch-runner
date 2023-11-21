@@ -17,7 +17,7 @@ it ( 'init', () => {
 it ( 'call a non-existing batch', () => {
                 const batch = batchRunner ();
                 const x = batch.run ( 'non-existing-batch' );
-                expect ( x ).to.be.false
+                expect ( x.length ).to.be.equal ( 0 )
     }) // it call a non-existing batch
 
 

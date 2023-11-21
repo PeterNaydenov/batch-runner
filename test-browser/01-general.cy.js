@@ -1,7 +1,12 @@
 'use strict'
 
-import { expect } from "chai"
+import { expect }   from "chai"
+import domSelector  from "@peter.naydenov/dom-selector"
 import batchRunner  from "../src/main.js"
+
+import Example1 from "./components/vue-example-01.vue"
+
+
 
 
 describe ( 'batch-runner', () => {
@@ -19,7 +24,7 @@ describe ( 'batch-runner', () => {
 it ( 'call a non-existing batch', () => {
         const batch = batchRunner ();
         const x = batch.run ( 'non-existing-batch' );
-        expect ( x ).to.be.false
+        expect ( x.length ).to.be.equal ( 0 )
 }) // it call a non-existing batch
 
 
@@ -106,6 +111,42 @@ it ( 'Set and execute a batch in the same call', () => {
                 })
         expect ( counter ).to.be.equal ( 1 )
 }) // it Set and execute a batch in the same call
+
+
+
+it ( 'Navigation example', done => {
+        cy.viewport ( 800, 650 )
+        cy.mount ( Example1 )
+        const d = document.querySelector ( '[data-cy-root]' );
+        const dom = domSelector ();
+        
+        dom.define ({ // Scan the DOM from the element with class 'list' and select all <a> elements
+                          name: 'list'
+                        , selector: () => d.getElementsByClassName ( 'list' )[0]
+                        , where : (item) => item.nodeName === 'A'
+                })
+        const batch = batchRunner ();
+        batch.define ({ // Update the active item job
+                          name: 'clean-selection'
+                        , source: () => dom.run ( 'list' )
+                        , job: ( item ) => item.classList.remove ( 'active' )
+                })
+        cy.wait ( 0 )
+          .then ( () => {
+                        const ls = dom.run ( 'list' )
+                        ls.forEach ( el => el.addEventListener ( 'click', e => {
+                                                        e.preventDefault ()
+                                                        batch.run ( 'clean-selection' )
+                                                        e.target.classList.add ( 'active' )
+                                                }))
+                        ls[0].click ()
+                        return ls
+                })
+          .then ( ls => {
+                        expect ( ls[0].classList.contains ( 'active' )).to.be.true
+                        done ()
+                })
+}) // it Navigation example
 
     
 }) // describe
