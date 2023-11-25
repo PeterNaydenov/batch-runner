@@ -56,7 +56,7 @@ const batch = batchRunner();
 batch.define ({
                       name   : 'myBatch'
                     , source : () => [1, 2, 3]
-                    , job    : (item,x) => console.log(item,x)
+                    , job    : ({item,i,END},x) => console.log(item,x)
             });
 
 batch.run ( 'myBatch', 'extra') // Extra parameter will be passed to the job function
@@ -66,11 +66,28 @@ batch.run ( 'myBatch', 'extra') // Extra parameter will be passed to the job fun
 // Number of extra parameters is not limited
 ```
 
+Job definition first argument is an object `{item,i,END}`, where `item` is the current item, `i` is the current source index, `END` is constant. To stop further function evocation return the `END` constant.
+Example:
+```js
+batch.define ({
+                      name   : 'myBatch'
+                    , source : () => [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+                    , job    : ({item,i,END},x) => {
+                                    return ( i < 2 ) ? item : END
+                                  }
+            });
+let r = batch.run ( 'myBatch' )
+// r -> [1,2]
+```
+
 
 
 
 ## Links
 - [History of changes](https://github.com/PeterNaydenov/batch-runner/blob/main/Changelog.md)
+- [Migration Guides](https://github.com/PeterNaydenov/batch-runner/blob/main/Migration.guide.md)
+
+
 
 ## Credits
 '@peter.naydenov/batch-runner' was created and supported by Peter Naydenov.

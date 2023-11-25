@@ -35,7 +35,7 @@ it ( 'Define and run a batch', () => {
         batch.define ({
                   name: 'test-batch'
                 , source: () => [ 1, 2, 3 ]
-                , job: ( item, next ) => {
+                , job: ( {item}, next ) => {
                                 count++
                                 expect ( item ).to.be.a ( 'number' )
                                 expect ( next ).to.be.a ( 'function' )
@@ -63,7 +63,7 @@ it ( 'Data from a function', () => {
         batch.define ({
                       name: 'test-batch'
                     , source
-                    , job: ( item ) => {
+                    , job: ({item}) => {
                                     counter++
                                     expect ( item ).to.be.a ( 'number' )
                                 }
@@ -84,7 +84,7 @@ it ( 'Data as a single item', () => {
         batch.define ({
                       name: 'test-batch'
                     , source
-                    , job: ( item ) => {
+                    , job: ({item}) => {
                                     counter++
                                     expect ( item ).to.be.a ( 'number' )
                                 }
@@ -104,7 +104,7 @@ it ( 'Set and execute a batch in the same call', () => {
         batch.run ({
                       name: 'test-batch'
                     , source
-                    , job: ( item ) => {
+                    , job: ({item}) => {
                                     counter++
                                     expect ( item ).to.be.a ( 'number' )
                                 }
@@ -129,7 +129,7 @@ it ( 'Navigation example', done => {
         batch.define ({ // Update the active item job
                           name: 'clean-selection'
                         , source: () => dom.run ( 'list' )
-                        , job: ( item ) => item.classList.remove ( 'active' )
+                        , job: ({item,i,END}) => item.classList.remove ( 'active' )
                 })
         cy.wait ( 0 )
           .then ( () => {
@@ -148,5 +148,23 @@ it ( 'Navigation example', done => {
                 })
 }) // it Navigation example
 
-    
+
+
+it ( 'Limit the results', () => {
+        const batch = batchRunner ();
+        function source () {
+                return [ 22, 43, 55, 66, 77, 88, 99 ]
+            }
+        const r = batch.run ({
+                                  name: 'test-batch'
+                                , source
+                                , job: ({item,i,END}) => {
+                                                return i < 2 ? item : END
+                                            }
+                        });
+        expect ( r.length ).to.be.equal ( 2 )
+}) // it Limit the results
+
+
+
 }) // describe

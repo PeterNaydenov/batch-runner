@@ -36,7 +36,7 @@ function batchRunner () {
                 if ( typeof name   !== 'string'   )   return false
                 if ( typeof source !== 'function' )   return false
                 if ( typeof job    !== 'function' )   return false
-                store.set( name, batch )
+                store.set( name, { name, source, job })
                 return true
         } // define func.
 
@@ -59,12 +59,21 @@ function batchRunner () {
         const record = store.get( name );
         if ( record == null )   return []
 
-        const { source, job } = record;
-        let data = source ();
+        const 
+              { source, job } = record
+            , END = Symbol ( 'end___' )
+            , result = []
+            ;
 
-        return ( data.length )
-                        ?  data.map ( item => job ( item, ...args )) 
-                        :  [data].map ( item => job ( item, ...args ))
+        let data = source ();
+        if ( !data.length )   data = [data];
+
+        for ( let [k,v] of data.entries() ) {
+                    let r = job ({item:v, i:k, END}, ...args )
+                    if ( r === END )   break
+                    result.push ( r )
+            }
+        return result
     } // run func.
 
     // Batch runner API

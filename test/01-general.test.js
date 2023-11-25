@@ -27,7 +27,7 @@ it ( 'Define and run a batch', done => {
                 batch.define ({
                           name: 'test-batch'
                         , source: () => [ 1, 2, 3 ]
-                        , job: ( item, next ) => {
+                        , job: ( {item}, next ) => {
                                         run = true
                                         expect ( item ).to.be.a ( 'number' )
                                         expect ( next ).to.be.a ( 'function' )
@@ -54,7 +54,7 @@ it ( 'Data from a function', () => {
                 batch.define ({
                               name: 'test-batch'
                             , source
-                            , job: ( item ) => {
+                            , job: ({item}) => {
                                             counter++
                                             expect ( item ).to.be.a ( 'number' )
                                         }
@@ -75,7 +75,7 @@ it ( 'Data as a single item', () => {
                 batch.define ({
                               name: 'test-batch'
                             , source
-                            , job: ( item ) => {
+                            , job: ({item}) => {
                                             counter++
                                             expect ( item ).to.be.a ( 'number' )
                                         }
@@ -95,7 +95,7 @@ it ( 'Set and execute a batch in the same call', () => {
                 batch.run ({
                               name: 'test-batch'
                             , source
-                            , job: ( item ) => {
+                            , job: ({item}) => {
                                             counter++
                                             expect ( item ).to.be.a ( 'number' )
                                         }
@@ -118,7 +118,7 @@ it ( 'Set and execute a batch in the same call', () => {
                 batch.define ({
                               name: 'test-batch'
                             , source
-                            , job: ( item ) => {
+                            , job: ({item}) => {
                                             expect ( item ).to.be.a ( 'number' )
                                             return item
                                         }
@@ -126,5 +126,22 @@ it ( 'Set and execute a batch in the same call', () => {
                 const r = batch.run ( 'test-batch' )
                 expect ( r ).to.be.deep.equal ( [ 1 ] )
     })
+
+
+
+it ( 'Limit the results', () => {
+                const batch = batchRunner ();
+                function source () {
+                        return [ 22, 43, 55, 66, 77, 88, 99 ]
+                    }
+                const r = batch.run ({
+                                          name: 'test-batch'
+                                        , source
+                                        , job: ({item,i,END}) => {
+                                                        return i < 2 ? item : END
+                                                    }
+                                });
+                expect ( r.length ).to.be.equal ( 2 )
+}) // it Limit the results
 
 }) // describe
