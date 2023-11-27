@@ -123,7 +123,7 @@ it ( 'Navigation example', done => {
         dom.define ({ // Scan the DOM from the element with class 'list' and select all <a> elements
                           name: 'list'
                         , selector: () => d.getElementsByClassName ( 'list' )[0]
-                        , where : (item) => item.nodeName === 'A'
+                        , where : ({item}) => (item.nodeName === 'A')? item : null
                 })
         const batch = batchRunner ();
         batch.define ({ // Update the active item job
@@ -138,7 +138,8 @@ it ( 'Navigation example', done => {
                                                         e.preventDefault ()
                                                         batch.run ( 'clean-selection' )
                                                         e.target.classList.add ( 'active' )
-                                                }))
+                                                })
+                                )
                         ls[0].click ()
                         return ls
                 })
