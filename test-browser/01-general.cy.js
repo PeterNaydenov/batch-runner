@@ -3,10 +3,11 @@
 import { expect }   from "chai"
 import domSelector  from "@peter.naydenov/dom-selector"
 import batchRunner  from "../src/main.js"
+import VisualController from '@peter.naydenov/visual-controller-for-vue3'
 
 import Example1 from "./components/vue-example-01.vue"
 
-
+const html = new VisualController ();
 
 
 describe ( 'batch-runner', () => {
@@ -115,11 +116,17 @@ it ( 'Set and execute a batch in the same call', () => {
 
 
 it ( 'Navigation example', done => {
-        cy.viewport ( 800, 650 )
-        cy.mount ( Example1 )
+        cy.viewport ( 800, 600 )
+
         const d = document.querySelector ( '[data-cy-root]' );
-        const dom = domSelector ();
+        d.id = 'app'
+
         
+        // cy.wait ( 0 )
+        html.publish ( Example1, {}, 'app' )
+
+        const dom = domSelector ();
+
         dom.define ({ // Scan the DOM from the element with class 'list' and select all <a> elements
                           name: 'list'
                         , selector: () => d.getElementsByClassName ( 'list' )[0]
