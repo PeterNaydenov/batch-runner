@@ -17,7 +17,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "mocha test",
-    "cypress": "cypress open --component --browser chrome",
+    "cypress": "cypress run --component --browser chrome",
     "cover": "c8 mocha test"
   },
   "repository": {
