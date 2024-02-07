@@ -1,20 +1,20 @@
 {
   "name": "@peter.naydenov/batch-runner",
   "description": "Execute a batch job with a simple call",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "license": "MIT",
   "author": "Peter Naydenov",
   "main": "./dist/batch-runner.umd.js",
   "type": "module",
   "exports": {
     ".": {
-            "import": "./dist/batch-runner.esm.mjs",
-            "require": "./dist/batch-runner.cjs",
-            "default": "./dist/batch-runner.umd.js"
-          },
-          "./package.json": "./package.json",
-          "./dist/*": "./dist/*",
-          "./src/*": "./src/*"
+      "import": "./dist/batch-runner.esm.mjs",
+      "require": "./dist/batch-runner.cjs",
+      "default": "./dist/batch-runner.umd.js"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*",
+    "./src/*": "./src/*"
   },
   "scripts": {
     "dev": "vite",
