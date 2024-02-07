@@ -4,17 +4,21 @@
   "version": "2.0.0",
   "license": "MIT",
   "author": "Peter Naydenov",
-  "keywords": [
-    "batch",
-    "job",
-    "runner",
-    "execute"
-  ],
-  "main": "src/main.js",
+  "main": "./dist/batch-runner.umd.js",
   "type": "module",
+  "exports": {
+    ".": {
+            "import": "./dist/batch-runner.esm.mjs",
+            "require": "./dist/batch-runner.cjs",
+            "default": "./dist/batch-runner.umd.js"
+          },
+          "./package.json": "./package.json",
+          "./dist/*": "./dist/*",
+          "./src/*": "./src/*"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "rollup -c",
     "preview": "vite preview",
     "test": "mocha test",
     "cypress": "cypress run --component --browser chrome",
@@ -25,12 +29,15 @@
     "url": "git+https://github.com/PeterNaydenov/batch-runner.git"
   },
   "devDependencies": {
-    "@peter.naydenov/dom-selector": "^2.0.0",
+    "@peter.naydenov/dom-selector": "^2.1.0",
     "@peter.naydenov/visual-controller-for-vue3": "^2.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
     "@vitejs/plugin-vue": "^5.0.3",
     "c8": "^9.1.0",
-    "chai": "^5.0.0",
-    "cypress": "^13.6.3",
+    "chai": "^5.0.3",
+    "cypress": "^13.6.4",
     "jsdom": "^24.0.0",
     "mocha": "^10.2.0",
     "vite": "^5.0.11",
@@ -49,5 +56,11 @@
       "lcov",
       "text-summary"
     ]
-  }
+  },
+  "keywords": [
+    "batch",
+    "job",
+    "runner",
+    "execute"
+  ]
 }
