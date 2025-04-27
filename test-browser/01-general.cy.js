@@ -129,7 +129,8 @@ it ( 'Navigation example', done => {
 
         dom.define ({ // Scan the DOM from the element with class 'list' and select all <a> elements
                           name: 'list'
-                        , selector: () => d.getElementsByClassName ( 'list' )[0]
+                        , selector: () => d.getElementsByClassName ( 'list' )
+                        , direction: 'down'
                         , where : ({item}) => (item.nodeName === 'A')? item : null
                 })
         const batch = batchRunner ();
