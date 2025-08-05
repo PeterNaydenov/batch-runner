@@ -141,6 +141,22 @@ it ( 'Set and execute a batch in the same call', () => {
     }) // it Set and execute a batch in the same call
 
 
+ it ( 'Optional source function', () => {
+                const batch = batchRunner ();
+                let counter = 0;
+                batch.define ({
+                              name: 'test-batch'
+                            , job: ({item}) => {
+                                            counter++
+                                            expect ( item ).to.be.a ( 'undefined' )
+                                        }
+                        })
+                batch.run ( 'test-batch' )
+
+                expect ( counter ).to.be.equal ( 1 )
+    }) // it Optional source function
+
+
  it ( 'Cover a browser case', () => {
                 // Mock browser environment
                 const gDOM = new JSDOM ()
