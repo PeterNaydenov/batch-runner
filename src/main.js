@@ -65,7 +65,7 @@ function batchRunner () {
             , result = []
             ;
 
-        let data = source ();
+        let data = source ( ...args||[]); // Call source with args or empty array if no args provided
         if ( !data.length || typeof data === 'string' )   data = [data];
 
         for ( let [k,v] of data.entries() ) {
