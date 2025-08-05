@@ -86,6 +86,26 @@ it ( 'Data as a single item', () => {
 
 
 
+it ( 'Data as a single string', () => {
+                const batch = batchRunner ();
+                let counter = 0;
+                function source () {
+                        return 'tada'
+                    }
+                batch.define ({
+                              name: 'test-batch'
+                            , source
+                            , job: ({item}) => {
+                                            counter++
+                                            expect ( item ).to.be.equal ( 'tada' )
+                                        }
+                        })
+                batch.run ( 'test-batch' )
+                expect ( counter ).to.be.equal ( 1 )
+    }) // it Data as a single string
+
+
+    
 it ( 'Set and execute a batch in the same call', () => {
                 const batch = batchRunner ();
                 let counter = 0;
