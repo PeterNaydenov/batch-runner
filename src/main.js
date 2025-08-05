@@ -66,7 +66,7 @@ function batchRunner () {
             ;
 
         let data = source ();
-        if ( !data.length )   data = [data];
+        if ( !data.length || typeof data === 'string' )   data = [data];
 
         for ( let [k,v] of data.entries() ) {
                     let r = job ({item:v, i:k, END}, ...args )
