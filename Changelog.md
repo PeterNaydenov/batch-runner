@@ -3,7 +3,7 @@
 
 
 ### 2.3.1 (??) - in development
-- [x] Define a dependencies durign the definition;
+- [x] Define a dependencies during the definition;
 
 
 
