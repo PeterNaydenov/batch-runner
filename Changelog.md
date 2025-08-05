@@ -2,10 +2,16 @@
 
 
 
+### 2.1.1 ( 2025-08-05)
+- [x] Fix: Breaks if source returns a string;
+
+
+
 ### 2.1.0 ( 2024-02-07)
 - [x] Folder 'dist' was added to the project. Includes commonjs, umd and esm versions of the library;
 - [x] Package.json: "exports" section was added. Allows you to use package as commonjs or es6 module without additional configuration;
 - [x] Rollup was added to the project. Used to build the library versions;
+- [ ] Bug: Breaks if source returns a string;
 
 
 
