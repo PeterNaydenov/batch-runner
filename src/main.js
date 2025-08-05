@@ -14,9 +14,8 @@
 /**
  * @typedef {Object} Batch
  * @property {string} name - Batch name
- * @property {function} source - Data source
+ * @property {function} [source] - Optional. Source of data. 
  * @property {function} job - Job to run on each data item
- * 
  */
 
 
@@ -32,7 +31,8 @@ function batchRunner () {
      * @returns {boolean} - true if batch was defined, false otherwise
      */
     function define ( batch ) {
-                const { name, source, job } = batch;
+                let { name, source, job } = batch;
+                if ( source == null )   source = () => undefined   // Default source returns empty array
                 if ( typeof name   !== 'string'   )   return false
                 if ( typeof source !== 'function' )   return false
                 if ( typeof job    !== 'function' )   return false
@@ -49,7 +49,6 @@ function batchRunner () {
      * @returns {Array} - Array of results
      */
     function run ( name, ...args ) {
-
         if ( typeof name !== 'string') {   // When we want to register a new batch and run it with the same call
                     const { name:newName } = name;
                     define ( name )
@@ -66,7 +65,11 @@ function batchRunner () {
             ;
 
         let data = source ( ...args||[]); // Call source with args or empty array if no args provided
-        if ( !data.length || typeof data === 'string' )   data = [data];
+        if ( 
+            typeof data === 'undefined' 
+            || !data.hasOwnProperty ( 'length' ) 
+            || typeof data === 'string' 
+          )   data = [data] // Ensure data is an array
 
         for ( let [k,v] of data.entries() ) {
                     let r = job ({item:v, i:k, END}, ...args )
