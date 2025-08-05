@@ -105,6 +105,23 @@ it ( 'Data as a single string', () => {
     }) // it Data as a single string
 
 
+
+it ( 'Source function with extra params', () => {
+                const batch = batchRunner ();
+                function source () {
+                            return [ ...arguments ]
+                    }
+                batch.define ({
+                                  name: "test-batch"
+                                , source
+                                , job : ({item}) => item
+                        })
+
+                const r = batch.run ( 'test-batch', 1, 2, 3 )
+                expect ( r ).to.be.deep.equal ( [ 1, 2, 3 ] )
+}) // it Source function with extra params
+
+
     
 it ( 'Set and execute a batch in the same call', () => {
                 const batch = batchRunner ();
