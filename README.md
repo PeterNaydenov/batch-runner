@@ -41,7 +41,7 @@ Library has only two methods:
 ```js
 batch.define ( {
       name   : 'string. Name of the batch'
-    , source : 'function. Should return a source of data for the job'
+    , source : 'function(optional). Should return a source of data for the job'
     , job    : 'job to be executed'
 ```
 
