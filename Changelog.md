@@ -2,8 +2,14 @@
 
 
 
+### 2.2.1 ( 2025-08-05)
+- [x] Fix: Missing build step;
+
+
+
 ### 2.2.0 ( 2025-08-05)
 - [x] Source function also receives the extra arguments; 
+- [ ] Bug: Missing build step;
 
 
 
