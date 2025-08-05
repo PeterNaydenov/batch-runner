@@ -1,7 +1,7 @@
 {
   "name": "@peter.naydenov/batch-runner",
   "description": "Execute a batch job with a simple call",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "license": "MIT",
   "author": "Peter Naydenov",
   "main": "./dist/batch-runner.umd.js",
