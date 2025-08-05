@@ -116,7 +116,7 @@ it ( 'Source function with extra params', () => {
                                 , source
                                 , job : ({item}) => item
                         })
-
+                // Arguments 1, 2, 3 are passed to job function but also to source function
                 const r = batch.run ( 'test-batch', 1, 2, 3 )
                 expect ( r ).to.be.deep.equal ( [ 1, 2, 3 ] )
 }) // it Source function with extra params
