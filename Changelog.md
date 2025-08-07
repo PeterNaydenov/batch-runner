@@ -2,11 +2,6 @@
 
 
 
-### 2.3.1 (??) - in development
-- [x] Define a dependencies during the definition;
-
-
-
 ### 2.3.0 ( 2025-08-05)
 - [x] Source function declaration is optional;
 
