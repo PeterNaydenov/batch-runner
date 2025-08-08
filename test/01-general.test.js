@@ -152,7 +152,6 @@ it ( 'Set and execute a batch in the same call', () => {
                                         }
                         })
                 batch.run ( 'test-batch' )
-
                 expect ( counter ).to.be.equal ( 1 )
     }) // it Optional source function
 
