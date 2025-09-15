@@ -31,7 +31,7 @@ npm i @peter.naydenov/batch-runner
 Library has only two methods:
 ```js
   define : 'define a batch'
-, run   : 'run a batch'
+, run    : 'run a batch'
 ```
 
 
@@ -43,6 +43,7 @@ batch.define ( {
       name   : 'string. Name of the batch'
     , source : 'function(optional). Should return a source of data for the job'
     , job    : 'job to be executed'
+    , final  : 'final refinement of the results ( after version 2.4.0 )' 
 ```
 
 
@@ -52,14 +53,14 @@ Simplified example:
 ```js
 import batchRunner from '@peter.naydenov/batch-runner'
 
-const batch = batchRunner();
+const batch = batchRunner();   // Creates a batch repository
 batch.define ({
                       name   : 'myBatch'
                     , source : () => [1, 2, 3]
-                    , job    : ({item,i,END},x) => console.log(item,x)
+                    , job    : ({item,i,END},x) => console.log(`${item},${x}`)
             });
 
-batch.run ( 'myBatch', 'extra') // Extra parameter will be passed to the job function
+batch.run ( 'myBatch', 'extra' ) // Extra parameter will be passed to the job function
 // -> 1,extra
 // -> 2,extra
 // -> 3,extra
@@ -80,6 +81,20 @@ let r = batch.run ( 'myBatch' )
 // r -> [1,2]
 ```
 
+Job always returns an array of results. You can change that by specifying the `final` function.
+```js
+batch.define ({
+                      name   : 'myBatch'
+                    , source : () => [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+                    , job    : ({item,i,END},x) => {
+                                    return ( i < 2 ) ? item : END
+                                  }
+                    , final : ( result ) => result.reduce ( (acc,item) => acc = acc + item, 0 )  // result argument is [1,2]
+                                          // convert array to sum of its items
+            });
+let r = batch.run ( 'myBatch' )
+// r -> 3
+``` 
 
 
 
