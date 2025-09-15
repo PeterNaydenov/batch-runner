@@ -16,12 +16,16 @@
  * @property {string} name - Batch name
  * @property {function} [source] - Optional. Source of data. 
  * @property {function} job - Job to run on each data item
+ * @property {function} [final] - Optional. Final job
  */
 
 
 function batchRunner () {
 
-    const store = new Map();
+    const 
+          store = new Map()
+        , MISSING = Symbol ( 'missing' )
+        ;
 
 
     /**
@@ -31,12 +35,14 @@ function batchRunner () {
      * @returns {boolean} - true if batch was defined, false otherwise
      */
     function define ( batch ) {
-                let { name, source, job } = batch;
-                if ( source == null )   source = () => undefined   // Default source returns empty array
+                let { name, source, job, final } = batch;
+                if ( source == null )   source = () => MISSING   // Job will be executed once with data === undefined
+                if ( final == null  )   final = ()  => MISSING   // If no final job is defined, will return the accumulated result as an array
                 if ( typeof name   !== 'string'   )   return false
                 if ( typeof source !== 'function' )   return false
                 if ( typeof job    !== 'function' )   return false
-                store.set( name, { name, source, job })
+                if ( typeof final  !== 'function' )   return false
+                store.set( name, { name, source, job, final })
                 return true
         } // define func.
 
@@ -59,14 +65,15 @@ function batchRunner () {
         if ( record == null )   return []
 
         const 
-              { source, job } = record
+              { source, job, final } = record
             , END = Symbol ( 'end___' )
             , result = []
             ;
 
         let data = source ( ...args||[]); // Call source with args or empty array if no args provided
+        if ( data === MISSING )   data = [ undefined ]
         if ( 
-            typeof data === 'undefined' 
+               typeof data === 'undefined' 
             || !data.hasOwnProperty ( 'length' ) 
             || typeof data === 'string' 
           )   data = [data] // Ensure data is an array
@@ -76,7 +83,9 @@ function batchRunner () {
                     if ( r === END )   break
                     result.push ( r )
             }
-        return result
+        const finalResult = final ( result, ...args )
+        if ( finalResult !== MISSING )   return finalResult
+        else                             return result
     } // run func.
 
     // Batch runner API
