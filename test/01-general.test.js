@@ -194,6 +194,27 @@ it ( 'Limit the results', () => {
                                                     }
                                 });
                 expect ( r.length ).to.be.equal ( 2 )
+                expect ( r ).to.be.deep.equal ( [ 22, 43 ] )
 }) // it Limit the results
+
+
+it ( 'final', () => {
+                const batch = batchRunner ();
+                function source () {
+                        return [ 22, 43, 55, 66, 77, 88, 99 ]
+                    }
+                const r = batch.run ({
+                                          name: 'test-batch'
+                                        , source
+                                        , job: ({item,i,END}) => {
+                                                        return i < 2 ? item : END
+                                                    }
+                                        , final : ( result ) => {
+                                                        expect ( result.length ).to.be.equal ( 2 )
+                                                        return result.reduce ( ( acc, item ) => acc + item, 0 )
+                                                    }
+                                });
+                expect ( r ).to.be.equal ( 65 )
+}) // it final
 
 }) // describe
