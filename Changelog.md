@@ -1,6 +1,9 @@
 # Release History
 
 
+### 2.4.0 ( 2025-09-15)
+- [x] Define job.final method to reshape or refine the final result;
+
 
 ### 2.3.0 ( 2025-08-05)
 - [x] Source function declaration is optional;
