@@ -29,7 +29,7 @@
     "url": "git+https://github.com/PeterNaydenov/batch-runner.git"
   },
   "devDependencies": {
-    "@peter.naydenov/dom-selector": "^3.0.0",
+    "@peter.naydenov/dom-selector": "^3.1.1",
     "@peter.naydenov/visual-controller-for-vue3": "^2.1.6",
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
