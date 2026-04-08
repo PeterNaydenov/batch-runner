@@ -1,1 +1,41 @@
-function n(){const n=new Map,t=Symbol("missing");function e(e){let{name:o,source:i,job:f,final:r}=e;return null==i&&(i=()=>t),null==r&&(r=()=>t),"string"==typeof o&&("function"==typeof i&&("function"==typeof f&&("function"==typeof r&&(n.set(o,{name:o,source:i,job:f,final:r}),!0))))}return{define:e,run:function(o,...i){if("string"!=typeof o){const{name:n}=o;e(o),o=n}const f=n.get(o);if(null==f)return[];const{source:r,job:u,final:s}=f,l=Symbol("end___"),c=[];let a=r(...i||[]);a===t&&(a=[void 0]),void 0!==a&&a.hasOwnProperty("length")&&"string"!=typeof a||(a=[a]);for(let[n,t]of a.entries()){let e=u({item:t,i:n,END:l},...i);if(e===l)break;c.push(e)}const p=s(c,...i);return p!==t?p:c}}}export{n as default};
+function h() {
+  const s = /* @__PURE__ */ new Map(), i = /* @__PURE__ */ Symbol("missing");
+  function c(t) {
+    let { name: n, source: f, job: o, final: r } = t;
+    return f == null && (f = () => i), r == null && (r = () => i), typeof n != "string" || typeof f != "function" || typeof o != "function" || typeof r != "function" ? !1 : (s.set(n, {
+      name: n,
+      source: f,
+      job: o,
+      final: r
+    }), !0);
+  }
+  function d(t, ...n) {
+    if (typeof t != "string") {
+      const { name: l } = t;
+      c(t), t = l;
+    }
+    const f = s.get(t);
+    if (f == null) return [];
+    const { source: o, job: r, final: b } = f, a = /* @__PURE__ */ Symbol("end___"), u = [];
+    let e = o(...n || []);
+    e === i && (e = [void 0]), (typeof e > "u" || !e.hasOwnProperty("length") || typeof e == "string") && (e = [e]);
+    for (let [l, g] of e.entries()) {
+      let y = r({
+        item: g,
+        i: l,
+        END: a
+      }, ...n);
+      if (y === a) break;
+      u.push(y);
+    }
+    const p = b(u, ...n);
+    return p !== i ? p : u;
+  }
+  return {
+    define: c,
+    run: d
+  };
+}
+export {
+  h as default
+};
