@@ -1,6 +1,15 @@
 # Release History
 
 
+
+### 2.4.1 ( 2026-04-08)
+- [x] Dev depenedencies updates;
+- [x] Moving from Cypress to vitest testing library;
+- [x] Upgrading to vite v.8.x.x;
+- [x] No changes in the code;
+
+
+
 ### 2.4.0 ( 2025-09-15)
 - [x] Define job.final method to reshape or refine the final result;
 
