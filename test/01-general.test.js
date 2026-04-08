@@ -1,6 +1,6 @@
 'use strict'
 
-import { expect } from "chai"
+import { expect, describe, it, beforeEach } from "vitest"
 import batchRunner from "../src/main.js"
 import { JSDOM } from 'jsdom'
 
@@ -21,7 +21,7 @@ it ( 'call a non-existing batch', () => {
     }) // it call a non-existing batch
 
 
-it ( 'Define and run a batch', done => {
+it ( 'Define and run a batch', () => {
                 const batch = batchRunner ();
                 let run = false
                 batch.define ({
@@ -39,7 +39,6 @@ it ( 'Define and run a batch', done => {
                     }
                 batch.run ( 'test-batch', next )
                 next ()
-                done ()
     }) // it Define and run a batch
 
 
