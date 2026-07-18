@@ -9,18 +9,17 @@
 
 ## Description
 
-Execute a batch job with a simple call. Batch itself contains a name, source of data and a job to be executed. Batch runner will execute the job for each item in the source.
+Execute a batch job with a simple call. A batch contains a name, a source of data and a job to be executed. Batch runner will execute the job for each item provided by the source.
 
-Source is a function that returns an array of items. Source function will be executed on each job run request so the source can be dynamic. Each item will be passed to the job function.
+The source is a function that returns the data to iterate over. The source function is executed on every `run()` call, so the data can be dynamic. Any non-array return value (single item, primitive, `null`, etc.) is automatically wrapped in a single-item array.
 
-In job run request you can provide extra data parameters that will be passed to the job function as well after the item from the source.
+Each item is passed to the job function. Extra arguments given to `run()` are forwarded to the `source`, the `job`, and the `final` function.
 
-Library `batch-runner` is a framework agnostic. No dependencies.
+Library `batch-runner` is framework-agnostic. No runtime dependencies.
 
 
 
 ## Installation
-Here is how to install the library:
 ```
 npm i @peter.naydenov/batch-runner
 ```
@@ -37,14 +36,17 @@ Library has only two methods:
 
 
 ## Definition of Batch
-    
+
 ```js
 batch.define ( {
       name   : 'string. Name of the batch'
-    , source : 'function(optional). Should return a source of data for the job'
+    , source : 'function (optional). Should return a source of data for the job'
     , job    : 'job to be executed'
-    , final  : 'final refinement of the results ( after version 2.4.0 )' 
+    , final  : 'function (optional). Final refinement of the results (since version 2.4.0)'
+} )
 ```
+
+`source`, `job` and `final` are functions. `source` and `final` are optional. `name` must be a string. `define` returns `true` on success and `false` if any of the required fields are missing or of the wrong type.
 
 
 
@@ -53,7 +55,7 @@ Simplified example:
 ```js
 import batchRunner from '@peter.naydenov/batch-runner'
 
-const batch = batchRunner();   // Creates a batch repository
+const batch = batchRunner ();   // Creates a batch repository
 batch.define ({
                       name   : 'myBatch'
                     , source : () => [1, 2, 3]
@@ -67,7 +69,9 @@ batch.run ( 'myBatch', 'extra' ) // Extra parameter will be passed to the job fu
 // Number of extra parameters is not limited
 ```
 
-Job definition first argument is an object `{item,i,END}`, where `item` is the current item, `i` is the current source index, `END` is constant. To stop further function evocation return the `END` constant.
+The same extra arguments are also passed to the `source` and the `final` function, in that order: `source(...args)`, then `job({item, i, END}, ...args)`, then `final(result, ...args)`.
+
+Job definition first argument is an object `{item, i, END}`, where `item` is the current item, `i` is the current source index, and `END` is a constant. To stop further function invocations, return the `END` constant.
 Example:
 ```js
 batch.define ({
@@ -81,7 +85,7 @@ let r = batch.run ( 'myBatch' )
 // r -> [1,2]
 ```
 
-Job always returns an array of results. You can change that by specifying the `final` function.
+By default, `run()` returns an array of the accumulated job results. Provide a `final` function to reshape or refine the result.
 ```js
 batch.define ({
                       name   : 'myBatch'
@@ -89,12 +93,16 @@ batch.define ({
                     , job    : ({item,i,END},x) => {
                                     return ( i < 2 ) ? item : END
                                   }
-                    , final : ( result ) => result.reduce ( (acc,item) => acc = acc + item, 0 )  // result argument is [1,2]
+                    , final  : ( result ) => result.reduce ( (acc,item) => acc = acc + item, 0 )  // result argument is [1,2]
                                           // convert array to sum of its items
             });
 let r = batch.run ( 'myBatch' )
 // r -> 3
-``` 
+```
+
+A `final` function can return any value (including `null` or `undefined`); the runner returns it as-is. If no `final` is provided, the raw results array is returned.
+
+If `source` is omitted, the job is executed once with `item === undefined`.
 
 
 
