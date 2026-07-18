@@ -17,9 +17,7 @@
     "./src/*": "./src/*"
   },
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
     "test": "vitest run",
     "cover": "vitest run --coverage"
   },
@@ -28,29 +26,11 @@
     "url": "git+https://github.com/PeterNaydenov/batch-runner.git"
   },
   "devDependencies": {
-    "@peter.naydenov/dom-selector": "^3.1.2",
-    "@peter.naydenov/visual-controller-for-vue3": "^2.3.1",
-    "@vitejs/plugin-vue": "^6.0.7",
-    "c8": "^11.0.0",
+    "@vitest/coverage-v8": "^4.1.9",
     "esbuild": "^0.28.1",
     "jsdom": "^29.1.1",
     "vite": "^8.0.16",
-    "vitest": "^4.1.9",
-    "vue": "^3.5.40"
-  },
-  "c8": {
-    "include": [
-      "src/**/*.js"
-    ],
-    "exclude": [
-      "node_modules",
-      "test",
-      "test-data"
-    ],
-    "reporter": [
-      "lcov",
-      "text-summary"
-    ]
+    "vitest": "^4.1.9"
   },
   "keywords": [
     "batch",
