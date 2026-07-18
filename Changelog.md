@@ -2,6 +2,16 @@
 
 
 
+### 2.4.2 ( 2026-07-18)
+- [x] Fix: Crashes when `source` returns `null`, a function, or any value that has `.length` but no `.entries()` (e.g. `HTMLCollection`, `arguments`). The data-wrapping check now uses `Array.isArray()` instead of `hasOwnProperty('length')`;
+- [x] Fix: `define()` no longer throws on `null`, `undefined` or non-object input — it returns `false`, matching the rest of the validation path;
+- [x] Change: Combined `batch.run({...})` (define-and-run in one call) now throws when the embedded batch definition is invalid, instead of silently returning `[]`;
+- [x] Test: Added regression cases for `null` source, function source, array-like source, invalid combined batch, and a return-value assertion on the optional-source path. The "Define and run a batch" test was rewritten to actually exercise the "extra args flow to the job" contract;
+- [x] Cleanup: Removed dead dev dependencies (`vue`, `@vitejs/plugin-vue`, `@peter.naydenov/dom-selector`, `@peter.naydenov/visual-controller-for-vue3`, `c8`), the unused `test-browser/` Vue scaffold, the `index.html` Vite dev page, and the `blueprint.md` file (which documented a different library);
+- [x] Cleanup: Coverage is now configured in a single place (`vitest.config.js`). `npm run cover` works again via `@vitest/coverage-v8`;
+
+
+
 ### 2.4.1 ( 2026-04-08)
 - [x] Dev depenedencies updates;
 - [x] Moving from Cypress to vitest testing library;
