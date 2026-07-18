@@ -1,41 +1,43 @@
-function h() {
-  const s = /* @__PURE__ */ new Map(), i = /* @__PURE__ */ Symbol("missing");
-  function c(t) {
-    let { name: n, source: f, job: o, final: r } = t;
-    return f == null && (f = () => i), r == null && (r = () => i), typeof n != "string" || typeof f != "function" || typeof o != "function" || typeof r != "function" ? !1 : (s.set(n, {
+var o = /* @__PURE__ */ Symbol("missing"), y = /* @__PURE__ */ Symbol("end___");
+function S() {
+  const l = /* @__PURE__ */ new Map();
+  function s(e) {
+    if (e == null || typeof e != "object") return !1;
+    let { name: n, source: t, job: i, final: r } = e;
+    return t == null && (t = () => o), r == null && (r = () => o), typeof n != "string" || typeof t != "function" || typeof i != "function" || typeof r != "function" ? !1 : (l.set(n, {
       name: n,
-      source: f,
-      job: o,
+      source: t,
+      job: i,
       final: r
     }), !0);
   }
-  function d(t, ...n) {
-    if (typeof t != "string") {
-      const { name: l } = t;
-      c(t), t = l;
+  function p(e, ...n) {
+    if (typeof e != "string") {
+      if (!s(e)) throw new Error("batch-runner: invalid batch definition");
+      e = e.name;
     }
-    const f = s.get(t);
-    if (f == null) return [];
-    const { source: o, job: r, final: b } = f, a = /* @__PURE__ */ Symbol("end___"), u = [];
-    let e = o(...n || []);
-    e === i && (e = [void 0]), (typeof e > "u" || !e.hasOwnProperty("length") || typeof e == "string") && (e = [e]);
-    for (let [l, g] of e.entries()) {
-      let y = r({
-        item: g,
-        i: l,
-        END: a
+    const t = l.get(e);
+    if (t == null) return [];
+    const { source: i, job: r, final: d } = t, u = [];
+    let f = i(...n);
+    f === o && (f = [void 0]), Array.isArray(f) || (f = [f]);
+    for (let [b, v] of f.entries()) {
+      let c = r({
+        item: v,
+        i: b,
+        END: y
       }, ...n);
-      if (y === a) break;
-      u.push(y);
+      if (c === y) break;
+      u.push(c);
     }
-    const p = b(u, ...n);
-    return p !== i ? p : u;
+    const a = d(u, ...n);
+    return a !== o ? a : u;
   }
   return {
-    define: c,
-    run: d
+    define: s,
+    run: p
   };
 }
 export {
-  h as default
+  S as default
 };
