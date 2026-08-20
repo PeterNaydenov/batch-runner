@@ -26,11 +26,11 @@
     "url": "git+https://github.com/PeterNaydenov/batch-runner.git"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.1.9",
+    "@vitest/coverage-v8": "^4.1.11",
     "esbuild": "^0.28.1",
     "jsdom": "^30.0.1",
     "vite": "^8.2.0",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.11"
   },
   "keywords": [
     "batch",
